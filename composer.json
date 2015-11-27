@@ -1,0 +1,12 @@
+{
+    "name": "larapack/attribute-slugging",
+    "description": "Allows your Eloquent Model to automatically generate a unique slug for a attribute on save.",
+    "keywords": ["package", "laravel", "larapack", "slug", "slugging", "attribute"],
+    "license": "MIT",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
