@@ -98,20 +98,30 @@ trait Sluggable
      */
     protected function getSluggableUniqueAttributeValue($name, $value)
     {
-	    $keyName = $this->getKeyName();
-	    $keyValue = $this->$keyName;
-        
-        $counter = 1;
-        
+        $keyName = $this->getKeyName();
+        $keyValue = $this->$keyName;
+
         $separator = $this->getSluggableSeparator();
-        
+
         // Remove any existing suffixes
         $_value = preg_replace('/'.preg_quote($separator).'[0-9]+$/', '', trim($value));
+
+        // If this model already have a slug that matches the requirements, then return that slug
+        $current = $this->newQuery()->whereRaw("{$name} RLIKE '{$_value}(-[0-9]*)?$'")->where($keyName, $keyValue)->first();
+        if ($current) {
+	    	return $current->{$name};
+	    }
         
-        // ensure this is unique
-        while ($this->newQuery()->where($name, $_value)->where($keyName, '!=', $keyValue)->count() > 0) {
-            $counter++;
-            $_value = $value . $separator . $counter;
+        // Get the latest slug matching the requirements to ensure that it is unique
+        $latestSlug = $this->newQuery()->whereRaw("{$name} RLIKE '{$_value}(-[0-9]*)?$'")->latest($name)->pluck($name);
+        if ($latestSlug) {
+	        if ($latestSlug == $_value) {
+		        return $_value . $separator . 1;
+	        }
+	        
+	        $pieces = explode('-', $latestSlug);
+	        $number = intval(end($pieces));
+	        return $_value . $separator . ($number + 1);
         }
         
         return $_value;
