@@ -7,17 +7,17 @@ Install using Composer `composer require larapack/attribute-slugging 1.*`.
 
 ## Usage
 
-First add the trait `Slugable` to your Eloquent Model.
+First add the trait `Sluggable` to your Eloquent Model.
 ```
 <?php
 
 namespace App;
 
-use Larapack/AttributeSlugging/Slugable;
+use Larapack/AttributeSlugging/Sluggable;
 
 class User
 {
-  use Slugable;
+  use Sluggable;
   
   /**
    * @var array List of attribute names which should be slugged
