@@ -13,7 +13,7 @@ First add the trait `Sluggable` to your Eloquent Model.
 
 namespace App;
 
-use Larapack/AttributeSlugging/Sluggable;
+use Larapack\AttributeSlugging\Sluggable;
 
 class User
 {
