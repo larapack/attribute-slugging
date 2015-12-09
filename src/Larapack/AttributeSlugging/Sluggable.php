@@ -110,7 +110,7 @@ trait Sluggable
         $separator = $this->getSluggableSeparator();
 
         // Remove any existing suffixes
-        $_value = preg_replace('/'.preg_quote($separator).'[0-9]+$/', '', trim($value));
+        $_value = preg_replace('/'.preg_quote($separator).'+$/', '', trim($value));
 
         // If this model already have a slug that matches the requirements, then return that slug
         $current = $this->newQuery()->whereRaw("{$name} RLIKE '{$_value}(-[0-9]*)?$'")->where($keyName, $keyValue)->first();
